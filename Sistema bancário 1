@@ -1,0 +1,83 @@
+#### Criando um sistema bancário ####
+
+#Criar o menu para mostrar para o usuário as opções que ele possue
+menu = """
+
+[d] Depositar
+[s] Sacar
+[e] Extrato
+[q] Sair
+
+=>"""
+
+#Temos que definir os valores iniciais para que o sistema possa ser criado
+saldo = 0
+limite = 500
+extrato =""
+numero_saque = 0
+limite_saque = 3
+
+#O while será executado até que o usuário decida encerrar a operação
+while True:
+    opcao = input(menu)
+
+    #Operação de depósito
+    if opcao == 'd':
+        valor = float(input('Informe o valor a ser depositado:'))
+        
+        #Esse bloco informa que se o valor a ser informado for menor que 0, aparecerá a mensagem de "valor inválido"
+        if valor > 0:
+            saldo += valor #Informando que o valor a ser depositado tem que ser positivo
+            extrato == f'Depósito: R${valor}\n'
+            
+        else:
+            print('Valor informado inválido. Por favor, informe outro valor!')
+       
+    #Operação de saque 
+    elif opcao =='s':
+        valor = float(input('Infome o valor de saque:'))
+        
+        #Definimos as variáveis para as mensagens aparecerem
+        excedeu_saldo = valor > saldo
+        
+        excedeu_limite = valor > limite
+        
+        excedeu_saque = numero_saque  >= limite_saque
+        
+        if excedeu_saldo:
+            print('Você não tem saldo suficiente! Tente outro valor!')
+        
+        elif excedeu_limite:
+            print('O valor de saque excede o limite! Tente outro valor!')
+            
+        elif excedeu_saque:
+            print('Você excedeu o número de saques!')
+        
+        #Se o valor informado não excedeu o saldo, o limite e o saque, então temos que verificar o valor informado
+        #Se o valor informado for menor que 0, aparecerá que a operação falhou.
+        #Se o valor informado for válido, então o valor será diminuído do saldo, é registrado o valor retirado e o valor dos saques que podem ocorrer
+        elif valor > 0:
+            saldo -= valor
+            extrato == f"Saque: R$ {valor:.2f}\n"
+            numero_saque + 1
+        else:
+            print("Operação invalida")
+            
+    #Operação de extrato
+    #Se o extrato estiver vazio, ou seja, sem operações, vai aparecer a mensagem"nçao foram realizadas movimentações"
+    #Se tiver saque, aparecerá o saldo final, após o saque
+    elif opcao == "e":
+        print("\n============EXTRATO===========")
+        print("Não foram realizadas movimentações" if not extrato else extrato)
+        print(f"Saldo: R$ {saldo:.2f}")
+        print("================================")
+
+    #Operação de saída
+    elif opcao =='q':
+        break
+        
+    else:
+        print('Operação inválida, por favor selecione novamente!')
+        
+    
+    
